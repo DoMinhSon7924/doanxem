@@ -3,17 +3,190 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cái Meow gì đây?</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Lời nhắn đến bạn bè</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e6f7ff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #005a87;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 90, 135, 0.2);
+            padding: 40px;
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+        }
+
+        h1 {
+            color: #0078b6;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 30px;
+        }
+
+        input {
+            padding: 12px 15px;
+            border: 2px solid #a0d8ef;
+            border-radius: 8px;
+            width: 70%;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #0078b6;
+        }
+
+        button {
+            background-color: #0078b6;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 25px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 15px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #005a87;
+        }
+
+        .message-box {
+            background-color: #e1f5fe;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .message-content {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .heart {
+            color: #ff6b6b;
+            font-size: 24px;
+        }
+
+        footer {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #64b5f6;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 25px;
+            }
+            
+            input {
+                width: 90%;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1>Nhập tên của bạn để xem bí mật!</h1>
-        <input type="text" id="crushName" placeholder="Nhập tên của bạn...">
-        <button onclick="showLoveMessage()">Nhấn để xem lời nhắn</button>
-        <p id="result" style="display: none;"></p>
+        <h1>Lời nhắn đến bạn bè</h1>
+        <p>Nhập tên của bạn để xem lời nhắn dành riêng cho bạn</p>
+        
+        <div class="input-group">
+            <input type="text" id="name-input" placeholder="Nhập tên của bạn...">
+            <br>
+            <button id="check-btn">Xem lời nhắn</button>
+        </div>
+        
+        <div class="message-box" id="message-box">
+            <p class="message-content" id="message-content"></p>
+        </div>
+        
+        <footer>
+            Made with <span class="heart">♥</span> | GitHub Pages
+        </footer>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        // Danh sách bạn bè và lời nhắn tương ứng
+        const friends = [
+            {
+                name: "Hùng",
+                message: "Hùng ơi, cảm ơn bạn đã luôn bên cạnh và hỗ trợ mình trong những lúc khó khăn. Tình bạn của chúng ta thật đáng trân trọng!"
+            },
+            {
+                name: "Linh",
+                message: "Linh à, cảm ơn bạn đã là người bạn tốt nhất của mình. Những kỷ niệm chúng ta có với nhau sẽ mãi là những điều quý giá trong cuộc đời mình."
+            },
+            {
+                name: "Tuấn",
+                message: "Tuấn ơi, chúc bạn luôn thành công trong cuộc sống và sự nghiệp. Mình rất cảm kích về những lời khuyên và sự giúp đỡ của bạn suốt thời gian qua."
+            },
+            {
+                name: "Mai",
+                message: "Mai à, cảm ơn bạn vì đã luôn lắng nghe và thấu hiểu mình. Bạn là người bạn tuyệt vời mà ai cũng mong muốn có được."
+            },
+            {
+                name: "Dũng",
+                message: "Dũng ơi, cảm ơn vì những nụ cười và tiếng cười mà bạn mang lại. Mỗi khi gặp khó khăn, hình ảnh về bạn luôn giúp mình vượt qua."
+            }
+            // Thêm bạn bè khác vào đây
+        ];
+
+        // Thông báo mặc định cho người không có trong danh sách
+        const defaultMessage = "Bạn không có trong danh sách, cảm ơn đã ghé thăm!";
+        
+        // Lấy các phần tử DOM
+        const nameInput = document.getElementById('name-input');
+        const checkBtn = document.getElementById('check-btn');
+        const messageBox = document.getElementById('message-box');
+        const messageContent = document.getElementById('message-content');
+
+        // Hàm kiểm tra tên và hiển thị thông báo
+        function checkName() {
+            const name = nameInput.value.trim();
+            if (!name) {
+                alert('Vui lòng nhập tên của bạn');
+                return;
+            }
+
+            // Tìm bạn trong danh sách
+            const friend = friends.find(friend => friend.name.toLowerCase() === name.toLowerCase());
+            
+            // Hiển thị lời nhắn
+            if (friend) {
+                messageContent.textContent = friend.message;
+            } else {
+                messageContent.textContent = defaultMessage;
+            }
+            
+            // Hiển thị hộp thông báo
+            messageBox.style.display = 'block';
+        }
+
+        // Thêm sự kiện click cho nút
+        checkBtn.addEventListener('click', checkName);
+        
+        // Thêm sự kiện nhấn Enter cho input
+        nameInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                checkName();
+            }
+        });
+    </script>
 </body>
 </html>
