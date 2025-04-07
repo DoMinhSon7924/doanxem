@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lời nhắn đến bạn bè</title>
+    <title>Tò mò gì mà vào tận đây?</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -91,7 +91,6 @@
             color: #64b5f6;
         }
 
-        /* Kết hợp từ mã CSS trái tim */
         #heart-animation {
             display: none;
             position: fixed;
@@ -119,7 +118,6 @@
             display: none;
         }
 
-        /* Đảm bảo trang web vẫn hoạt động trên thiết bị di động */
         @media (max-width: 480px) {
             .container {
                 padding: 25px;
@@ -138,11 +136,11 @@
     </div>
     
     <div class="container" id="main-container">
-        <h1>Lời nhắn đến bạn bè</h1>
-        <p>Nhập tên của bạn để xem lời nhắn dành riêng cho bạn</p>
+        <h1>Không có gì đâu</h1>
+        <p>Nhưng thử ingame của bạn vào đi</p>
         
         <div class="input-group">
-            <input type="text" id="name-input" placeholder="Nhập tên của bạn...">
+            <input type="text" id="name-input" placeholder="Nhập ingame của bạn...">
             <br>
             <button id="check-btn">Xem lời nhắn</button>
         </div>
@@ -155,42 +153,43 @@
             Made with <span class="heart">♥</span> | GitHub Pages
         </footer>
     </div>
-
+    
     <script>
-        // Danh sách bạn bè và lời nhắn tương ứng
+        
         const friends = [
             {
                 name: "Xuan Anh",
-                message: "Xuân Anh thân mến, cảm ơn bạn vì tất cả những kỷ niệm đáng nhớ. Tình bạn của chúng ta thật đặc biệt! ❤️",
-                special: true  // Đánh dấu đây là người đặc biệt để hiển thị hiệu ứng trái tim
+                message: "Ai day?",
+                special: true
             },
             {
-                name: "Hùng",
-                message: "Hùng ơi, cảm ơn bạn đã luôn bên cạnh và hỗ trợ mình trong những lúc khó khăn. Tình bạn của chúng ta thật đáng trân trọng!"
+                name: "Kai2_5",
+                message: "Xin lỗi chú em vì mặc kệ mọi chuyện mà không nói, anh thật khốn lạn :))"
             },
             {
-                name: "Linh",
-                message: "Linh à, cảm ơn bạn đã là người bạn tốt nhất của mình. Những kỷ niệm chúng ta có với nhau sẽ mãi là những điều quý giá trong cuộc đời mình."
+                name: "hahthaoo",
+                message: "Tình cảm hơi nhạt phai đấy bạn yêu nhé, Anyways. dù sau này không làm bạn nữa thì quãng thời gian làm bạn của chúng ta vẫn rất tuyệt vời, cảm ơn m "
             },
             {
-                name: "Tuấn",
-                message: "Tuấn ơi, chúc bạn luôn thành công trong cuộc sống và sự nghiệp. Mình rất cảm kích về những lời khuyên và sự giúp đỡ của bạn suốt thời gian qua."
+                name: "SOLINNA_02",
+                message: "Chào cp no love của mình, đừng giận dỗi mình nhiều quá nhé"
             },
             {
-                name: "Mai",
-                message: "Mai à, cảm ơn bạn vì đã luôn lắng nghe và thấu hiểu mình. Bạn là người bạn tuyệt vời mà ai cũng mong muốn có được."
+                name: "Dezazuuu",
+                message: "Cảm ơn đã dành tình cảm cho anh. Chúc em tìm được người thương."
             },
             {
-                name: "Dũng",
-                message: "Dũng ơi, cảm ơn vì những nụ cười và tiếng cười mà bạn mang lại. Mỗi khi gặp khó khăn, hình ảnh về bạn luôn giúp mình vượt qua."
+                name: "Zhou_",
+                message: "Chào Zhou nhé, thật sự là không có vào stalk đâu :< (Mình xạo)"
+            },
+            {
+                name: "congchuabuoin",
+                message: "Tên cũng hay đấy, nhưng thử nhập tên bạn xem?"
             }
-            // Thêm bạn bè khác vào đây
         ];
 
-        // Thông báo mặc định cho người không có trong danh sách
-        const defaultMessage = "Bạn không có trong danh sách, cảm ơn đã ghé thăm!";
+        const defaultMessage = "Sơn chưa có lời nhắn cho bạn.";
         
-        // Lấy các phần tử DOM
         const nameInput = document.getElementById('name-input');
         const checkBtn = document.getElementById('check-btn');
         const messageBox = document.getElementById('message-box');
@@ -199,29 +198,22 @@
         const mainContainer = document.getElementById('main-container');
         const loveMessage = document.getElementById('love-message');
 
-        // Hàm kiểm tra tên và hiển thị thông báo
         function checkName() {
             const name = nameInput.value.trim();
             if (!name) {
                 alert('Vui lòng nhập tên của bạn');
                 return;
             }
-
-            // Tìm bạn trong danh sách
+            
             const friend = friends.find(friend => friend.name.toLowerCase() === name.toLowerCase());
             
-            // Hiển thị lời nhắn
             if (friend) {
                 messageContent.textContent = friend.message;
                 
-                // Nếu là người đặc biệt (Xuan Anh), hiển thị hiệu ứng trái tim
                 if (friend.special) {
-                    // Hiển thị hiệu ứng trái tim và ẩn container chính
                     heartAnimation.style.display = 'block';
                     mainContainer.style.display = 'none';
                     loveMessage.style.display = 'block';
-                    loveMessage.textContent = "Xuân Anh, Mình Yêu Bạn ❤️";
-                    // Khởi chạy animation trái tim
                     initHeartAnimation();
                 } else {
                     messageBox.style.display = 'block';
@@ -232,36 +224,27 @@
             }
         }
 
-        // Thêm sự kiện click cho nút
         checkBtn.addEventListener('click', checkName);
         
-        // Thêm sự kiện nhấn Enter cho input
         nameInput.addEventListener('keypress', function(event) {
             if (event.key === 'Enter') {
                 checkName();
             }
         });
 
-        // Mã nguồn cho hiệu ứng trái tim
         function initHeartAnimation() {
-            /*
-            * Settings
-            */
             var settings = {
                 particles: {
-                    length: 500, // maximum amount of particles
-                    duration: 2, // particle duration in sec
-                    velocity: 100, // particle velocity in pixels/sec
-                    effect: -0.75, // play with this for a nice effect
-                    size: 30, // particle size in pixels
+                    length: 500, 
+                    duration: 2, 
+                    velocity: 100, 
+                    effect: -0.75,
+                    size: 30,
                 },
             };
             
             (function(){var b=0;var c=["ms","moz","webkit","o"];for(var a=0;a<c.length&&!window.requestAnimationFrame;++a){window.requestAnimationFrame=window[c[a]+"RequestAnimationFrame"];window.cancelAnimationFrame=window[c[a]+"CancelAnimationFrame"]||window[c[a]+"CancelRequestAnimationFrame"]}if(!window.requestAnimationFrame){window.requestAnimationFrame=function(h,e){var d=new Date().getTime();var f=Math.max(0,16-(d-b));var g=window.setTimeout(function(){h(d+f)},f);b=d+f;return g}}if(!window.cancelAnimationFrame){window.cancelAnimationFrame=function(d){clearTimeout(d)}}}());
 
-            /*
-            * Point class
-            */
             var Point = (function() {
                 function Point(x, y) {
                     this.x = (typeof x !== 'undefined') ? x : 0;
@@ -287,9 +270,6 @@
                 return Point;
             })();
 
-            /*
-            * Particle class
-            */
             var Particle = (function() {
                 function Particle() {
                     this.position = new Point();
@@ -324,9 +304,6 @@
                 return Particle;
             })();
 
-            /*
-            * ParticlePool class
-            */
             var ParticlePool = (function() {
                 var particles,
                     firstActive = 0,
@@ -334,15 +311,13 @@
                     duration    = settings.particles.duration;
 
                 function ParticlePool(length) {
-                    // create and populate particle pool
                     particles = new Array(length);
                     for (var i = 0; i < particles.length; i++)
                         particles[i] = new Particle();
                 }
                 ParticlePool.prototype.add = function(x, y, dx, dy) {
                     particles[firstFree].initialize(x, y, dx, dy);
-                
-                    // handle circular queue
+
                     firstFree++;
                     if (firstFree   == particles.length) firstFree   = 0;
                     if (firstActive == firstFree       ) firstActive++;
@@ -351,7 +326,6 @@
                 ParticlePool.prototype.update = function(deltaTime) {
                     var i;
                 
-                    // update active particles
                     if (firstActive < firstFree) {
                         for (i = firstActive; i < firstFree; i++)
                             particles[i].update(deltaTime);
@@ -363,14 +337,13 @@
                             particles[i].update(deltaTime);
                     }
                 
-                    // remove inactive particles
                     while (particles[firstActive].age >= duration && firstActive != firstFree) {
                         firstActive++;
                         if (firstActive == particles.length) firstActive = 0;
                     }
                 };
                 ParticlePool.prototype.draw = function(context, image) {
-                    // draw active particles
+
                     if (firstActive < firstFree) {
                         for (i = firstActive; i < firstFree; i++)
                             particles[i].draw(context, image);
@@ -385,16 +358,13 @@
                 return ParticlePool;
             })();
 
-            /*
-            * Putting it all together
-            */
+
             (function(canvas) {
                 var context = canvas.getContext('2d'),
                     particles = new ParticlePool(settings.particles.length),
-                    particleRate = settings.particles.length / settings.particles.duration, // particles/sec
+                    particleRate = settings.particles.length / settings.particles.duration, 
                     time;
 
-                // get point on heart with -PI <= t <= PI
                 function pointOnHeart(t) {
                     return new Point(
                         160 * Math.pow(Math.sin(t), 3),
@@ -402,53 +372,43 @@
                     );
                 }
 
-                // creating the particle image using a dummy canvas
                 var image = (function() {
                     var canvas  = document.createElement('canvas'),
                         context = canvas.getContext('2d');
                     canvas.width  = settings.particles.size;
                     canvas.height = settings.particles.size;
-                    // helper function to create the path
                     function to(t) {
                         var point = pointOnHeart(t);
                         point.x = settings.particles.size / 2 + point.x * settings.particles.size / 350;
                         point.y = settings.particles.size / 2 - point.y * settings.particles.size / 350;
                         return point;
                     }
-                    // create the path
                     context.beginPath();
                     var t = -Math.PI;
                     var point = to(t);
                     context.moveTo(point.x, point.y);
                     while (t < Math.PI) {
-                        t += 0.01; // baby steps!
+                        t += 0.01; 
                         point = to(t);
                         context.lineTo(point.x, point.y);
                     }
                     context.closePath();
-                    // create the fill
                     context.fillStyle = '#e80c29';
                     context.fill();
-                    // create the image
                     var image = new Image();
                     image.src = canvas.toDataURL();
                     return image;
                 })();
 
-                // render that thing!
                 function render() {
-                    // next animation frame
                     requestAnimationFrame(render);
                 
-                    // update time
                     var newTime   = new Date().getTime() / 1000,
                         deltaTime = newTime - (time || newTime);
                     time = newTime;
-                
-                    // clear canvas
+
                     context.clearRect(0, 0, canvas.width, canvas.height);
-                
-                    // create new particles
+
                     var amount = particleRate * deltaTime;
                     for (var i = 0; i < amount; i++) {
                         var pos = pointOnHeart(Math.PI - 2 * Math.PI * Math.random());
@@ -456,19 +416,16 @@
                         particles.add(canvas.width / 2 + pos.x, canvas.height / 2 - pos.y, dir.x, -dir.y);
                     }
                 
-                    // update and draw particles
                     particles.update(deltaTime);
                     particles.draw(context, image);
                 }
 
-                // handle (re-)sizing of the canvas
                 function onResize() {
                     canvas.width  = canvas.clientWidth;
                     canvas.height = canvas.clientHeight;
                 }
                 window.onresize = onResize;
 
-                // delay rendering bootstrap
                 setTimeout(function() {
                     onResize();
                     render();
